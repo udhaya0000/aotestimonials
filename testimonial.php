@@ -49,8 +49,8 @@ class Testimonials {
 	 * Addings the admin JavaScript
 	 */
 	public function register_admin_scripts() {
-    wp_enqueue_script( 'testimonials-meta-js', plugins_url( 'js/index.js', __FILE__ ), array('jquery'), CMB_VERSION);
-    wp_enqueue_script( 'testimonials-js', plugins_url( 'js/testimonials.js', __FILE__ ), array('jquery'), CMB_VERSION);
+    wp_enqueue_script( 'testimonials-meta-js', plugins_url( 'js/index.js', __FILE__ ), array('jquery'), T_VERSION);
+    wp_enqueue_script( 'testimonials-js', plugins_url( 'js/testimonials.js', __FILE__ ), array('jquery'), T_VERSION);
     wp_localize_script( 'testimonials-js',
         array(
           'title' => __( 'Choose or Upload Media' ),
