@@ -51,7 +51,7 @@ class Testimonials {
 	public function register_admin_scripts() {
     wp_enqueue_script( 'testimonials-meta-js', plugins_url( 'js/index.js', __FILE__ ), array('jquery'), T_VERSION);
     wp_enqueue_script( 'testimonials-js', plugins_url( 'js/testimonials.js', __FILE__ ), array('jquery'), T_VERSION);
-    wp_localize_script( 'testimonials-js',
+    wp_localize_script( 'testimonials-js', 'testimonial-image',
         array(
           'title' => __( 'Choose or Upload Media' ),
           'button' => __( 'Use this media' ),
