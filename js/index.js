@@ -9,7 +9,7 @@ jQuery(document).ready(function($) {
 
     // Sets up the media library frame
     metaImageFrame = wp.media.frames.metaImageFrame = wp.media({
-      title: feature_image.title,
+      title: testimonial_image.title,
       button: {
         text: 'Use this file'
       }

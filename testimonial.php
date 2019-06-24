@@ -38,8 +38,12 @@ class Testimonials {
     add_action( 'init', array($this, 'create_cpt') );
     add_action( 'add_meta_boxes', array( $this, 'add_meta_box' ) );
     add_action( 'save_post', array( $this, 'save_testimonials_meta' ) );
-
+		add_action( 'admin_enqueue_scripts', array($this, 'load_wp_media_files') );
 	 } // end construct
+
+	 function load_wp_media_files() {
+	 	wp_enqueue_media();
+	 }
 
 	/* --------------------------------------------
 	 * Localization, Styles, and JavaScript
@@ -49,9 +53,10 @@ class Testimonials {
 	 * Addings the admin JavaScript
 	 */
 	public function register_admin_scripts() {
+		wp_enqueue_style( 'bootstrap', 'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.css', array(), T_VERSION);
     wp_enqueue_script( 'testimonials-meta-js', plugins_url( 'js/index.js', __FILE__ ), array('jquery'), T_VERSION);
-    wp_enqueue_script( 'testimonials-js', plugins_url( 'js/testimonials.js', __FILE__ ), array('jquery'), T_VERSION);
-    wp_localize_script( 'testimonials-js', 'testimonial-image',
+    wp_enqueue_script( 'testimonial-js', plugins_url( 'js/testimonial.js', __FILE__ ), array('jquery'), T_VERSION);
+    wp_localize_script( 'testimonial-js', 'testimonial_image',
         array(
           'title' => __( 'Choose or Upload Media' ),
           'button' => __( 'Use this media' ),
@@ -149,22 +154,30 @@ class Testimonials {
     $testimonial = isset($values['testimonial']) ? json_decode($values['testimonial'][0]) : null;
     //var_dump($testimonial);
     ?>
+		<div class="form-group">
+      <div class="font-weight-bold mb-1">Author Title</div>
+      <input type="text" class="form-control" name="testimonial[auther_title]" value="<?php echo (isset($testimonial) && isset($testimonial->auther_title)) ? $testimonial->auther_title : ""; ?>">
+    </div>
+		<div class="form-group">
+      <div class="font-weight-bold mb-1">Author Company</div>
+      <input type="text" class="form-control" name="testimonial[auther_co]" value="<?php echo (isset($testimonial) && isset($testimonial->auther_co)) ? $testimonial->auther_co : ""; ?>">
+    </div>
     <div class="js-form-group form-group">
-      <div>Testimonial Icon</div>
-      <div class="js-img-wrap">
+      <div class="font-weight-bold mb-1">Testimonial Icon</div>
+      <div class="js-img-wrap mb-2">
         <?php if(isset($testimonial)): ?>
           <img src="<?php echo $testimonial->icon_url; ?>" alt=""/>
         <?php endif; ?>
       </div>
       <div class="input-group">
-        <input id="testimonial_icon_url" type="hidden" class="form-control" name="testimonial[icon_url]" value="<?php echo isset($testimonial) ? $testimonial->icon_url : ""; ?>">
+        <input id="testimonial_icon_url" type="text" class="form-control" name="testimonial[icon_url]" value="<?php echo isset($testimonial) ? $testimonial->icon_url : ""; ?>">
         <div class="input-group-append">
-          <button type="button" data-media-uploader-target="#testimonial_icon_url" class="btn btn-default js-add-icon">Add Icon</button>
+          <button type="button" data-media-uploader-target="#testimonial_icon_url" class="btn btn-secondary js-add-icon">Add Icon</button>
         </div>
       </div>
     </div>
     <div class="form-group">
-      <div>Testimonial Content</div>
+      <div class="font-weight-bold">Testimonial Content</div>
       <textarea name="testimonial[text]" class="form-control" ><?php echo isset($testimonial) ? $testimonial->text : ""; ?></textarea>
     </div>
 
