@@ -39,7 +39,6 @@ class Testimonials {
 
 	 	// Setup the meta box hooks
     add_action( 'init', array($this, 'create_cpt') );
-    add_action( 'save_post', array( $this, 'save_testimonials_meta' ) );
 		add_action( 'admin_enqueue_scripts', array($this, 'load_wp_media_files') );
 
 		$this->add_meta_box();
@@ -159,7 +158,7 @@ class Testimonials {
 		$cmb_page->add_field( array(
 			'name' => 'Author Feedback',
 			'id'   => $prefix.'feedback',
-			'type' => 'text',
+			'type' => 'textarea_small',
 		) );
 
 		$cmb_page->add_field( array(
