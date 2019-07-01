@@ -144,7 +144,7 @@ class Testimonials {
 
 		// Now register the taxonomy
 
-			register_taxonomy('staff_categories',array('testimonials'), array(
+			register_taxonomy('testimonial_categories',array('testimonials'), array(
 				'public' => true,
 				'publicly_queryable' => true,
 				'hierarchical' => true,
