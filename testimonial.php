@@ -56,7 +56,6 @@ class Testimonials {
 	 * Addings the admin JavaScript
 	 */
 	public function register_admin_scripts() {
-		wp_enqueue_style( 'bootstrap', 'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.css', array(), T_VERSION);
     wp_enqueue_script( 'testimonials-meta-js', plugins_url( 'js/index.js', __FILE__ ), array('jquery'), T_VERSION);
     wp_enqueue_script( 'testimonial-js', plugins_url( 'js/testimonial.js', __FILE__ ), array('jquery'), T_VERSION);
     wp_localize_script( 'testimonial-js', 'testimonial_image',
@@ -123,8 +122,39 @@ class Testimonials {
 
     // Registering your Custom Post Type
     register_post_type('testimonials', $args);
-
+		$this->create_taxonomy();
 	} // add_file_meta_box
+
+	// Register Custom Taxonomy
+	private function create_taxonomy()
+	{
+		$labels = array(
+				'name' => _x( $this->singular_label.' Categories', 'taxonomy general name' ),
+				'singular_name' => _x( $this->singular_label.' Category', 'taxonomy singular name' ),
+				'search_items' =>  __( 'Search '.$this->singular_label.' Categories' ),
+				'all_items' => __( 'All '.$this->singular_label.' Categories' ),
+				'parent_item' => __( 'Parent '.$this->singular_label.' Category' ),
+				'parent_item_colon' => __( 'Parent '.$this->singular_label.' Category:' ),
+				'edit_item' => __( 'Edit '.$this->singular_label.' Category' ),
+				'update_item' => __( 'Update '.$this->singular_label.' Category' ),
+				'add_new_item' => __( 'Add New '.$this->singular_label.' Category' ),
+				'new_item_name' => __( 'New '.$this->singular_label.' Category Name' ),
+				'menu_name' => __( $this->singular_label.' Categories' ),
+			);
+
+		// Now register the taxonomy
+
+			register_taxonomy('staff_categories',array('testimonials'), array(
+				'public' => true,
+				'publicly_queryable' => true,
+				'hierarchical' => true,
+				'labels' => $labels,
+				'show_ui' => true,
+				'show_admin_column' => true,
+				'query_var' => true,
+				'rewrite' => array( 'slug' => 'testimonials', 'with_front' => true, ),
+			));
+	}
 
 	public function add_meta_box()
 	{
