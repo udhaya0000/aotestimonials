@@ -179,7 +179,7 @@ class Testimonials {
 
 
 		$cmb_page->add_field( array(
-			'name' => 'Author Location',
+			'name' => 'Author Location / Title',
 			'desc' => '',
 			'id'   => $prefix.'location',
 			'type' => 'text',
